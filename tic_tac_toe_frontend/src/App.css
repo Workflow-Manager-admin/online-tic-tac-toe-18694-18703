@@ -1,104 +1,220 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #1976d2;
+  --secondary: #424242;
+  --accent: #ffb300;
+  --light-bg: #f7fafd;
+  --shadow: 0 2px 18px #1976d229, 0 1.5px 8px #42424215;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+body, html, #root {
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--light-bg, #f7fafd);
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--light-bg, #f7fafd);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: var(--secondary, #232429);
+  transition: background 0.4s;
+  letter-spacing: 0.005em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.ttt-header {
+  width: 100%;
+  padding-bottom: 0.1em;
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
   position: relative;
+  z-index: 1;
+}
+.ttt-title {
+  font-family: 'Rubik', 'Segoe UI', Arial, sans-serif;
+  font-size: 2.38em;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 0.3em;
+  margin-top: 0.1em;
+  text-shadow: 0 2px 6px #fff9, 0 1.5px 3px #1976d236;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Player name inputs */
+.ttt-player-form {
+  margin: 0.7em 0 0.8em; 
+  font-size: 1.1em;
+}
+.ttt-player-input label {
+  font-size: 1em;
+  font-weight: 600;
+  margin-right: 5px;
+  letter-spacing: 0.03em;
+}
+.ttt-player-input input {
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 7px;
+  border: 1.4px solid #e6e9ed;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+.ttt-player-input input:focus {
+  border-color: var(--primary);
 }
 
+/* Start/restart buttons */
+.ttt-start-btn, .ttt-restart-btn {
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.42em 1.7em;
+  margin-left: 8px;
+  outline: none !important;
+  border: none;
+  box-shadow: 0 1.5px 8px #1976d21c, 0 0.5px 2px #42424213;
+  letter-spacing: 1.2px;
+  transition: background 0.2s, opacity 0.2s;
+}
+.ttt-start-btn {
+  background: var(--primary);
+}
+.ttt-restart-btn {
+  background: var(--secondary);
+}
+.ttt-start-btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Board styling */
+.ttt-board-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2em auto;
+  min-height: 260px;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(65px, 86px));
+  grid-template-rows: repeat(3, minmax(65px, 86px));
+  gap: 0.6em;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1em;
+}
+
+.ttt-square {
+  width: 70px;
+  height: 70px;
+  max-width: 95px;
+  max-height: 95px;
+  font-size: 2.3em;
+  font-family: inherit;
+  border-radius: 16px;
+  border: 2.8px solid var(--secondary);
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s, border-color 0.18s, background 0.22s, font-weight 0.18s, box-shadow 0.18s;
+  user-select: none;
+  box-shadow: 0 2px 6px #1976d213;
+}
+.ttt-square:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.ttt-square:active {
+  box-shadow: 0 2px 1px #ffb30110 !important;
+}
+
+/* Highlighted winning squares */
+.ttt-square[style*="#ffb30022"] {
+  background: #ffb30033 !important;
+  border-color: #ffb300 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 8px #ffb30088;
+}
+
+/* Controls & status */
+.ttt-controls {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+.ttt-status {
+  font-size: 1.35em;
+  min-height: 28px;
+  margin-bottom: 0.5em;
+}
+
+/* Theme toggle button */
 .theme-toggle {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+  top: 22px;
+  right: 32px;
+  background-color: var(--primary);
+  color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 8px 22px;
+  font-size: 0.95em;
+  font-weight: 650;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.23s, box-shadow 0.23s, color 0.23s;
+  box-shadow: 0 2px 8px #0000000A;
+  outline: none;
+  z-index: 2;
 }
-
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  background-color: var(--accent);
+  color: #fff;
 }
-
 .theme-toggle:active {
-  transform: translateY(0);
+  background-color: var(--secondary);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 700px) {
+  .ttt-player-form {
+    flex-direction: column;
+    gap: 0.7em;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-board {
+    grid-template-columns: repeat(3, minmax(46px, 66px));
+    grid-template-rows: repeat(3, minmax(46px, 66px));
+    min-width: 140px; max-width: 196px;
+    min-height: 140px; max-height: 196px;
   }
+  .ttt-board-outer { min-height: 186px; }
+  .ttt-square { font-size: 1.6em; width: 48px; height: 48px; }
+  .theme-toggle { top: 10px; right: 10px; padding: 7px 12px; font-size: 0.93em; }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+@media (max-width: 400px) {
+  .ttt-title { font-size: 1.3em; }
+  .ttt-square { font-size: 1em; min-width: 32px; min-height: 32px; }
+  .ttt-header { padding: 0 6px !important; }
+}
+
+/* General focus style */
+.ttt-square:focus-visible, .ttt-player-input input:focus-visible, .theme-toggle:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 3px;
 }
